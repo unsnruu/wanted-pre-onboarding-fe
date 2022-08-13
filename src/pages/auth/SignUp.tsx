@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 /**
  * todos
  * 1. 이메일과 비밀번호의 validation 필수.
@@ -37,12 +38,17 @@ function SignUp() {
     setPassword(e.currentTarget.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    /**
-     * todos
-     * 1. 서버와 성공적으로 생성이 된 경우 페이지 push하기
-     */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      const user = { email, password };
+      const res = await axios.post("/auth/signup", user, {
+        withCredentials: false,
+      });
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
 
     resetValues();
   };
@@ -51,11 +57,9 @@ function SignUp() {
     setPassword("");
   };
 
-  const validateUserInfo = (email: string, password: string) => {};
-
   return (
     <div>
-      <h1>Sign Up</h1>
+      <h1>회원가입</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">이메일</label>
