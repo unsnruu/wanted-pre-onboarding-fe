@@ -1,11 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+/**
+ * todos
+ * 1. 이메일과 비밀번호의 validation 필수.
+ * 2. 버튼 활성화를 그에 따라서 진행할 것
+ */
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [disabled, setDisabled] = useState(true);
 
-  const navigato = useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const validateEmail = (email: string) => {
+      if (email.includes("@")) return true;
+      else return false;
+    };
+    const validatePassword = (password: string) => {
+      if (password.length >= 8) return true;
+      else return false;
+    };
+
+    if (validateEmail(email) && validatePassword(password)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [email, password]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
@@ -15,6 +38,10 @@ function SignUp() {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    /**
+     * todos
+     * 1. 서버와 성공적으로 생성이 된 경우 페이지 push하기
+     */
     e.preventDefault();
 
     resetValues();
@@ -23,6 +50,8 @@ function SignUp() {
     setEmail("");
     setPassword("");
   };
+
+  const validateUserInfo = (email: string, password: string) => {};
 
   return (
     <div>
@@ -47,7 +76,7 @@ function SignUp() {
             onChange={handleChangePassword}
           />
         </div>
-        <button>가입하기</button>
+        <button disabled={disabled}>가입하기</button>
       </form>
     </div>
   );
