@@ -1,9 +1,19 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div``;
 
 function Home() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const accessToken = window.localStorage.getItem("access_token");
+    if (accessToken) {
+      navigate("/todo");
+    } else {
+      return;
+    }
+  }, []);
   return (
     <div>
       <Container>
