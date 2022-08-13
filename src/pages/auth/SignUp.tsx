@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 /**
  * todos
  * 1. 이메일과 비밀번호의 validation 필수.
  * 2. 버튼 활성화를 그에 따라서 진행할 것
  */
+
+interface AxiosReturn {
+  access_token: string;
+}
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -13,6 +20,8 @@ function SignUp() {
   const [disabled, setDisabled] = useState(true);
 
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   useEffect(() => {
     const validateEmail = (email: string) => {
@@ -42,10 +51,11 @@ function SignUp() {
     e.preventDefault();
     try {
       const user = { email, password };
-      const res = await axios.post("/auth/signup", user, {
+      const { data } = await axios.post<AxiosReturn>("/auth/signup", user, {
         withCredentials: false,
       });
-      console.log(res);
+      const { access_token } = data;
+      login(access_token);
     } catch (err) {
       console.error(err);
     }
