@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
+
+interface AxiosReturn {
+  access_token: string;
+}
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -7,6 +13,8 @@ function SignIn() {
   const [disabled, setDisabled] = useState(true);
 
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   useEffect(() => {
     const validateEmail = (email: string) => {
@@ -32,10 +40,20 @@ function SignIn() {
     setPassword(e.currentTarget.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    resetValues();
+    try {
+      const user = { email, password };
+      const { data } = await axios.post<AxiosReturn>("/auth/signin", user, {
+        withCredentials: false,
+      });
+      const { access_token } = data;
+      login(access_token);
+      resetValues();
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error(err);
+    }
   };
   const resetValues = () => {
     setEmail("");
@@ -65,7 +83,7 @@ function SignIn() {
             onChange={handleChangePassword}
           />
         </div>
-        <button disabled={disabled}>가입하기</button>
+        <button disabled={disabled}>로그인</button>
       </form>
     </div>
   );
