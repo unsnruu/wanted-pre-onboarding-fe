@@ -56,11 +56,11 @@ function SignUp() {
       });
       const { access_token } = data;
       login(access_token);
+      resetValues();
+      navigate("/", { replace: true });
     } catch (err) {
       console.error(err);
     }
-
-    resetValues();
   };
   const resetValues = () => {
     setEmail("");
