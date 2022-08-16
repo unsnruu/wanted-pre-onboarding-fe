@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
-import { Global, css } from "@emotion/react";
+import { Global, css, ThemeProvider, Theme } from "@emotion/react";
 
 import App from "./pages/App";
-import NotFound from "./pages/404";
-import SignUp from "./pages/auth/SignUp";
-import SignIn from "./pages/auth/SignIn";
 
-import Auth from "./pages/auth/Auth";
-import Home from "./pages/Home";
+import TodoProvider from "./context/TodoContext";
+import AuthProvider from "./context/AuthContext";
 
-axios.defaults.baseURL = "http://localhost:8000";
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL =
+  "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/";
+axios.defaults.headers.common["Access-Control-Allow-Origin"] =
+  "http://localhost:8000";
+axios.defaults.withCredentials = false;
 
 const globalStyles = css`
   * {
@@ -26,6 +26,16 @@ const globalStyles = css`
       "Segoe UI Symbol", sans-serif;
   }
 `;
+const theme: Theme = {
+  color: {
+    highlight: "#C7F9CC",
+    primary: "#57CC99",
+    secondary: "#80ED99",
+    dark: "#38A3A5",
+    deepDark: "#22577A",
+    warning: "#E63946",
+  },
+};
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -34,16 +44,13 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Global styles={globalStyles} />
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route index element={<Home />} />
-        <Route path="auth" element={<Auth />}>
-          <Route path="signup" element={<SignUp />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route index element={<NotFound />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <TodoProvider>
+            <App />
+          </TodoProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
