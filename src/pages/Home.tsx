@@ -1,32 +1,65 @@
-import styled from "@emotion/styled";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
 
-const Container = styled.div``;
+import { AuthContext } from "../context/AuthContext";
 
+const Background = styled.div`
+  background-color: ${({ theme }) => theme.color.primary};
+  width: 100vw;
+  height: 100vh;
+`;
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 3rem;
+`;
+const Title = styled.h2`
+  text-align: center;
+`;
+const AuthLinkContainer = styled.div`
+  position: absolute;
+  display: flex;
+  right: 0;
+  & > a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: black;
+  }
+  & > a:last-of-type {
+    color: ${({ theme }) => theme.color.primary};
+  }
+  @media (max-width: 578px) {
+    position: relative;
+  }
+`;
 function Home() {
   const navigate = useNavigate();
+  const { getToken } = useContext(AuthContext);
+  const [windowSize, setWindowSize] = useState(0);
+
   useEffect(() => {
-    const accessToken = window.localStorage.getItem("access_token");
+    const accessToken = getToken();
     if (accessToken) {
       navigate("/todo");
     } else {
       return;
     }
-  }, []);
+  }, [getToken, navigate]);
+
   return (
-    <div>
+    <Background>
       <Container>
-        <h1>첫 화면</h1>
-        <div>
-          <h3>할 일을 기록해보세요!</h3>
-        </div>
-        <div>
+        <Title>할 일을 기록해보세요!</Title>
+        <AuthLinkContainer>
           <Link to={"/auth/signin"}>로그인</Link>
           <Link to={"/auth/signup"}>회원가입</Link>
-        </div>
+        </AuthLinkContainer>
       </Container>
-    </div>
+    </Background>
   );
 }
 
