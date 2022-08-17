@@ -42,7 +42,7 @@ const UserActionContainer = styled.div`
   height: 2rem;
   margin-top: 2rem;
 `;
-const CancelIconWrapper = styled.div`
+const CancelIcon = styled(MdOutlineArrowBack)`
   display: flex;
   align-items: center;
   height: 100%;
@@ -85,6 +85,7 @@ function EditTodo() {
 
   useEffect(() => {
     if (!id) return;
+
     const todo = todos.filter((todo) => todo.id === parseInt(id, 10))[0];
     setTodo(todo);
   }, [id, todos]);
@@ -105,12 +106,17 @@ function EditTodo() {
       console.error(err);
     }
   };
+  const handleChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo((todo) => ({ ...todo, todo: e.target.value }));
+  };
   const handleClickCompleted = () => {
     setTodo((todo) => ({
       ...todo,
       isCompleted: !todo.isCompleted,
     }));
   };
+  const handleClickCancel = () => navigate("/todo");
+
   return (
     <Floating>
       <Container>
@@ -127,9 +133,7 @@ function EditTodo() {
               id="todo"
               type="text"
               value={todo.todo}
-              onChange={(e) => {
-                setTodo((todo) => ({ ...todo, todo: e.target.value }));
-              }}
+              onChange={handleChangeTodo}
             />
           </div>
           <CompletionContainer isCompleted={todo.isCompleted}>
@@ -139,13 +143,7 @@ function EditTodo() {
             </span>
           </CompletionContainer>
           <UserActionContainer>
-            <CancelIconWrapper>
-              <MdOutlineArrowBack
-                onClick={() => {
-                  navigate("/todo");
-                }}
-              />
-            </CancelIconWrapper>
+            <CancelIcon onClick={handleClickCancel} />
             <EditConfirmButton>수정하기</EditConfirmButton>
           </UserActionContainer>
         </form>
