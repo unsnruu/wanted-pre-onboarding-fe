@@ -1,4 +1,4 @@
-import { Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { IoIosArrowBack } from "react-icons/io";
 
