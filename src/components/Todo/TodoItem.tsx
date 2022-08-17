@@ -43,14 +43,14 @@ interface TodoItemProps {
   id: number;
   todo: string;
   isCompleted: boolean;
-  createDeleteHandler: (id: number) => () => void;
+  handleClickDeleteButton: (id: number) => () => void;
 }
 
 function TodoItem({
   id,
   isCompleted,
   todo,
-  createDeleteHandler,
+  handleClickDeleteButton,
 }: TodoItemProps) {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -73,7 +73,7 @@ function TodoItem({
         <MdEdit onClick={handleClickEdit} />
         <RiDeleteBin2Fill
           style={{ color: theme.color.warning }}
-          onClick={createDeleteHandler(id)}
+          onClick={handleClickDeleteButton(id)}
         />
       </IconWrapper>
     </Container>
