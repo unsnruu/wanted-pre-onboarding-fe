@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "@emotion/styled";
 
 import { AuthContext } from "../../context/AuthContext";
+import { IoIosArrowBack } from "react-icons/io";
+import { AiFillHome } from "react-icons/ai";
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.color.primary};
@@ -14,6 +16,16 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+const GoBackContainer = styled.div`
+  font-size: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 1rem;
+  & a {
+    color: white;
+  }
+`;
 const StyledForm = styled.form`
   background-color: white;
   padding: 2rem;
@@ -21,6 +33,10 @@ const StyledForm = styled.form`
   font-size: 1.2rem;
   box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
 
+  @media (max-width: 578px) {
+    box-shadow: none;
+    border-radius: 0;
+  }
   transition: transform 0.2s linear;
   & label {
     margin-right: 0.5rem;
@@ -112,6 +128,12 @@ function SignIn() {
 
   return (
     <Container>
+      <GoBackContainer>
+        <Link to="/">
+          <IoIosArrowBack />
+          <AiFillHome />
+        </Link>
+      </GoBackContainer>
       <h1 style={{ color: "white" }}>로그인</h1>
       <StyledForm onSubmit={handleSubmit}>
         <div>

@@ -1,19 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "@emotion/styled";
 
 import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { AiFillHome } from "react-icons/ai";
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.color.primary};
   width: 100vw;
   height: 100vh;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+const GoBackContainer = styled.div`
+  font-size: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 1rem;
+  & a {
+    color: white;
+  }
 `;
 const StyledForm = styled.form`
   background-color: white;
@@ -111,6 +123,12 @@ function SignUp() {
 
   return (
     <Container>
+      <GoBackContainer>
+        <Link to="/">
+          <IoIosArrowBack />
+          <AiFillHome />
+        </Link>
+      </GoBackContainer>
       <h1 style={{ color: "white" }}>회원가입</h1>
       <StyledForm onSubmit={handleSubmit}>
         <div>
