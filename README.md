@@ -1,8 +1,8 @@
-# 원티드 프리온보딩 프론트엔드 코스 과제
+# 원티드 프리온보딩 - 프론트엔드 코스 과제
 
 ## 실행방법
 
-> npm install
+> npm install</br>
 > npm run start
 
 ## 참고
