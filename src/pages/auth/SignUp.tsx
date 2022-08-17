@@ -1,14 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import styled from "@emotion/styled";
 
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
-/**
- * todos
- * 1. 이메일과 비밀번호의 validation 필수.
- * 2. 버튼 활성화를 그에 따라서 진행할 것
- */
+
+const Container = styled.div`
+  background-color: ${({ theme }) => theme.color.primary};
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+const StyledForm = styled.form`
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+  & label {
+    margin-right: 0.5rem;
+    font-weight: 700;
+  }
+  & input {
+    border: none;
+    border-bottom: 1px solid black;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+  & input:focus {
+    outline: none;
+  }
+  & button {
+    margin-top: 1rem;
+    width: 100%;
+    height: 2rem;
+    font-size: inherit;
+    background-color: ${({ theme }) => theme.color.primary};
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  & button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+    color: gray;
+  }
+`;
 
 interface AxiosReturn {
   access_token: string;
@@ -68,9 +110,9 @@ function SignUp() {
   };
 
   return (
-    <div>
-      <h1>회원가입</h1>
-      <form onSubmit={handleSubmit}>
+    <Container>
+      <h1 style={{ color: "white" }}>회원가입</h1>
+      <StyledForm onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">이메일</label>
           <input
@@ -91,8 +133,8 @@ function SignUp() {
           />
         </div>
         <button disabled={disabled}>가입하기</button>
-      </form>
-    </div>
+      </StyledForm>
+    </Container>
   );
 }
 
