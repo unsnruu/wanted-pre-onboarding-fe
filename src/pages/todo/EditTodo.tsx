@@ -8,7 +8,6 @@ import type { TodoData, TodoOuletContextType } from "./Todo";
 import { AuthContext } from "../../context/AuthContext";
 import { MdOutlineArrowBack } from "react-icons/md";
 import Floating from "../../components/Floating";
-import { useTheme } from "@emotion/react";
 
 const Container = styled.div`
   padding: 2rem;
