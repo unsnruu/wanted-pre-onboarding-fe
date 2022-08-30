@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 
@@ -39,7 +39,6 @@ const AuthLinkContainer = styled.div`
 function Home() {
   const navigate = useNavigate();
   const { getToken } = useContext(AuthContext);
-  const [windowSize, setWindowSize] = useState(0);
 
   useEffect(() => {
     const accessToken = getToken();
