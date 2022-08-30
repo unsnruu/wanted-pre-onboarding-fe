@@ -36,7 +36,7 @@ const theme: Theme = {
     warning: "#E63946",
   },
 };
-
+console.log("abc")
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
