@@ -10,7 +10,7 @@ import TodoProvider from "./context/TodoContext";
 import AuthProvider from "./context/AuthContext";
 
 axios.defaults.baseURL =
-  "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/";
+  "https://n38lcff1wk.execute-api.ap-northeast-2.amazonaws.com/";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] =
   "http://localhost:8000";
 axios.defaults.withCredentials = false;
