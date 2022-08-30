@@ -1,4 +1,4 @@
-import { useEffect, createContext, PropsWithChildren, useState } from "react";
+import { createContext, PropsWithChildren } from "react";
 
 interface AuthContextType {
   login: (aceessToken: string) => void;
