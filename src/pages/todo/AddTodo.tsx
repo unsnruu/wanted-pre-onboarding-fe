@@ -65,7 +65,6 @@ function AddTodo() {
             value={newTodo}
             onKeyDown={handleKeyDown}
           />
-          f
           <MdOutlineAdd
             onClick={handleSubmitTodo}
             style={{
