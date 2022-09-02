@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import type { ChangeEventHandler } from "react";
 import { useOutletContext } from "react-router-dom";
 import axios from "axios";
+
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 
@@ -34,7 +36,7 @@ function AddTodo() {
   const { setTodos } = useOutletContext<TodoOuletContextType>();
   const theme = useTheme();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setNewTodo(e.target.value);
   };
   const handleSubmitEvent = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,17 +44,7 @@ function AddTodo() {
   };
   const handleSubmitTodo = async () => {
     try {
-      const { data } = await axios.post(
-        "/todos",
-        { todo: newTodo },
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "access_token"
-            )}`,
-          },
-        }
-      );
+      const { data } = await axios.post("/todos", { todo: newTodo });
       setTodos((todos) => [...todos, data]);
       setNewTodo("");
     } catch (err) {}
@@ -73,6 +65,7 @@ function AddTodo() {
             value={newTodo}
             onKeyDown={handleKeyDown}
           />
+          f
           <MdOutlineAdd
             onClick={handleSubmitTodo}
             style={{

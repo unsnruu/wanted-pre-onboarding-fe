@@ -14,6 +14,9 @@ axios.defaults.baseURL =
 axios.defaults.headers.common["Access-Control-Allow-Origin"] =
   "http://localhost:8000";
 axios.defaults.withCredentials = false;
+axios.defaults.headers.common[
+  "Authorization"
+] = `Bearer ${window.localStorage.getItem("access_token")}`;
 
 const globalStyles = css`
   * {
