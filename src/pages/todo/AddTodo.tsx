@@ -57,6 +57,11 @@ function AddTodo() {
       setNewTodo("");
     } catch (err) {}
   };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      handleSubmitTodo();
+    }
+  };
   return (
     <Floating>
       <Container>
@@ -66,11 +71,7 @@ function AddTodo() {
             type="text"
             onChange={handleChange}
             value={newTodo}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.nativeEvent.isComposing) {
-                handleSubmitTodo();
-              }
-            }}
+            onKeyDown={handleKeyDown}
           />
           <MdOutlineAdd
             onClick={handleSubmitTodo}
