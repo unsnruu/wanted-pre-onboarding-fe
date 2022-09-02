@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import NotFound from "./404";
 import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
-import Auth from "./auth/Auth";
 import Home from "./Home";
 import Todo from "./todo/Todo";
 import AddTodo from "./todo/AddTodo";
@@ -14,10 +13,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="auth" element={<Auth />}>
+      <Route path="auth">
+        <Route index element={<NotFound />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
-        <Route index element={<NotFound />} />
       </Route>
       <Route path="todo" element={<Todo />}>
         <Route index element={<AddTodo />} />
